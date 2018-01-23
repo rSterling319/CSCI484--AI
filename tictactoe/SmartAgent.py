@@ -40,6 +40,7 @@ class SmartAgent(Agent):
             for play in playable:
                 spot=play
                 #if win (for x) detected use the move that does not produce a win!:
+                #FIXME make move if next move is a win
                 blockWin = self.checkImmediateLoss(state,spot)
                 if blockWin:
                     break
@@ -84,11 +85,6 @@ class SmartAgent(Agent):
                     print("look = none")
                     look=0
                 value += look
-                # look=self.lookAhead(state, play, level-10)
-                # if look == None:
-                #     print("look = none")
-                #     look=0
-                # return 1 + look
             return value
 
     def setName(self):
@@ -99,13 +95,17 @@ class SmartAgent(Agent):
             time.sleep(1/random.randint(2,10))
         print()
 
+
     def checkImmediateLoss(self, _state, spot):
         state = copy.deepcopy(_state)
         mark = state.getState()
         state.move(spot[0],spot[1], mark)
-        aWin = False
+        #return the move that gives a win
+        if state.getState() == Const.STATE_WIN_X:
+            return spot
         for play in state.getPlayable():
             state.move(play[0],play[1], state.getState())
+            #return the move that gives O a win (so you block it)
             if state.getState() == Const.STATE_WIN_O:
                 return play
             state.unmove(play[0],play[1])
