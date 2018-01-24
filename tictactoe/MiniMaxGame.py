@@ -5,14 +5,15 @@ from RandomAgent import RandomAgent
 from Agent import Agent
 from HumanAgent import HumanAgent
 from SmartAgent import SmartAgent
+from MiniMaxAgent import MiniMaxAgent
 import os
 import time
 
-class RandomGame:
+class MiniMaxGame:
     abc ="abc"
     def __init__(self):
         self._state = State()
-        self._agentX = RandomAgent()
+        self._agentX = MiniMaxAgent()
         self._agentO = HumanAgent()
         self._agentX.setName()
         self._agentO.setName()
@@ -63,6 +64,6 @@ class RandomGame:
 
 if __name__ == '__main__':
     os.system("clear")
-    game = RandomGame()
+    game = MiniMaxGame()
     game.play()
 
