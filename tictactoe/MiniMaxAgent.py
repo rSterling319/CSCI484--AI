@@ -13,10 +13,10 @@ from Agent import Agent
 import time
 import random
 
-class SmartAgent(Agent):
+class MiniMaxAgent(Agent):
     abc = {0:'a',1:'b',2:'c'}
-    def __init__(self,_xORo):
-        super().__init__(_xORo)
+    def __init__(self):
+        super().__init__()
 
 
 
@@ -30,24 +30,24 @@ class SmartAgent(Agent):
             raise ValueError("state must be playable")
         board = state.getBoard()
         playable = state.getPlayable()
-        if len(playable) > 6:
-            #pick random spot
-            spot=playable[random.randint(0,len(playable)-1)]
-        else:
+        # if len(playable) > 6:
+        #     #pick random spot
+        #     spot=playable[random.randint(0,len(playable)-1)]
+        # else:
             #lookAhead play best scoring
-            playScoreList =[]
-            blockWin = None
-            for play in playable:
-                spot=play
-                #if win (for x) detected use the move that does not produce a win!:
-                blockWin = self.checkImmediateLoss(state,spot)
-                if blockWin:
-                    break
-                playScoreList.append(self.lookAhead(state,spot, 100))
-            if blockWin:
-                spot = blockWin
-            else:
-                spot = playable[playScoreList.index(max(playScoreList))]
+        playScoreList =[]
+        blockWin = None
+        for play in playable:
+            spot=play
+            #if win (for x) detected use the move that does not produce a win!:
+            # blockWin = self.checkImmediateLoss(state,spot)
+            # if blockWin:
+            #     break
+            playScoreList.append(self.lookAhead(state,spot))
+        # if blockWin:
+        #     spot = blockWin
+        # else:
+        spot = playable[playScoreList.index(max(playScoreList))]
 
 
         print("make a move: ", end='', flush=True)
@@ -58,14 +58,14 @@ class SmartAgent(Agent):
         time.sleep(1)
         return Move(spot[0],spot[1],mark)
 
-    def lookAhead(self,_state,spot,level):
+    def lookAhead(self,_state,spot):
         mark=None
         state=copy.deepcopy(_state)
 
-        if state.getState()==self.winCondition:
-            return 10*level
-        elif state.getState()==self.loseCondition:
-            return -10*level
+        if state.getState()==Const.STATE_WIN_X:
+            return 1
+        elif state.getState()==Const.STATE_WIN_O:
+            return -1
         elif state.getState()==Const.STATE_DRAW:
             return 0
         else:
@@ -77,18 +77,21 @@ class SmartAgent(Agent):
                 raise ValueError("state must be playable")
 
             state.move(spot[0],spot[1],mark)
-            value = 0
+            value = []
             for play in state.getPlayable():
-                look = self.lookAhead(state, play, level-10)
+                look = self.lookAhead(state, play)
                 if look == None:
-                    print("look = none")
+                    #print("look = none")
                     look=0
-                value += look
-            return value
+                value.append(look)
+            if state.getState() == Const.STATE_TURN_O:
+                return min(value)
+            if state.getState() == Const.STATE_TURN_X:
+                return max(value)
 
     def setName(self):
         self._name = Const.AI_NAMES[random.randint(0, len(Const.AI_NAMES)-1)]
-        print("Enter your name: ", end='')
+        print("You are playing against: ", end='')
         for let in self._name:
             print(let, end="",flush=True)
             time.sleep(1/random.randint(2,10))
@@ -100,12 +103,12 @@ class SmartAgent(Agent):
         mark = state.getState()
         state.move(spot[0],spot[1], mark)
         #return the move that gives a win
-        if state.getState() == self.winCondition:
+        if state.getState() == Const.STATE_WIN_X:
             return spot
         for play in state.getPlayable():
             state.move(play[0],play[1], state.getState())
-            #return the move that gives Opponent a win (so you block it)
-            if state.getState() == self.loseCondition:
+            #return the move that gives O a win (so you block it)
+            if state.getState() == Const.STATE_WIN_O:
                 return play
             state.unmove(play[0],play[1])
 

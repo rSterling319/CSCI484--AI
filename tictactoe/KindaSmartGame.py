@@ -8,12 +8,12 @@ from SmartAgent import SmartAgent
 import os
 import time
 
-class RandomGame:
+class KindaSmartGame:
     abc ="abc"
     def __init__(self):
         self._state = State()
-        self._agentX = RandomAgent()
-        self._agentO = HumanAgent()
+        self._agentX = SmartAgent(Const.MARK_X)
+        self._agentO = SmartAgent(Const.MARK_O)
         self._agentX.setName()
         self._agentO.setName()
 
@@ -63,6 +63,6 @@ class RandomGame:
 
 if __name__ == '__main__':
     os.system("clear")
-    game = RandomGame()
+    game = KindaSmartGame()
     game.play()
 

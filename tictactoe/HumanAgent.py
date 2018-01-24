@@ -6,8 +6,8 @@ from Agent import Agent
 
 class HumanAgent(Agent):
     rowDict = {"a":0,"b":1,"c":2}
-    def __init__(self):
-        super().__init__()
+    def __init__(self, _xORo):
+        super().__init__(_xORo)
 
     def move(self, state):
         mark = None

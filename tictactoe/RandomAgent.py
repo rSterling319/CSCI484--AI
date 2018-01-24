@@ -8,8 +8,8 @@ import random
 
 class RandomAgent(Agent):
     abc = {0:'a',1:'b',2:'c'}
-    def __init__(self):
-        super().__init__()
+    def __init__(self, _xORo):
+        super().__init__(_xORo)
 
     def move(self,state):
         mark = None
