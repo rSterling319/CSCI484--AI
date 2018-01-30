@@ -8,86 +8,88 @@ import copy
 import random
 from Const import Const
 from Move import Move
-from State import State
+from Game import Game
 from Agent import Agent
 import time
 import random
 
 class MiniMaxAgent(Agent):
     abc = {0:'a',1:'b',2:'c'}
-    def __init__(self):
-        super().__init__()
+    def __init__(self, _side):
+        super().__init__(_side)
+
+    def value(self,game):
+        ans = None
+        state = game.getState()
+        if state == Const.STATE_WIN_O:
+            if self.side == Const.MARK_O: ans = 1
+            else: ans = -1
+        elif state == Const.STATE_WIN_X:
+            if self.side == Const.MARK_X: ans = 1
+            else: ans = -1
+        elif state == Const.STATE_DRAW:
+            ans = 0
+
+        if ans != None: return (ans,0)
+
+        iside = 0
+        if self.side == Const.MARK_O: iside = 1
+        else: iside = -1
+
+        iturn = 0
+        if state == Const.STATE_TURN_O: iturn = 1
+        else: iturn = -1
+
+        myTurn = (iside == iturn)
+        myOptions = 0
+
+        for move in game.getMoves():
+            move.play(game)
+            (moveValue,moveOptions)=self.value(game)
+            move.unplay(game)
+            myOptions = myOptions + 1 + moveOptions
+            if ans == None:
+                ans = moveValue
+            else:
+                if myTurn:
+                   ans = max(ans,moveValue)
+                else:
+                   ans = min(ans,moveValue)
+
+        return (ans,myOptions)
 
 
 
-    def move(self,state):
-        mark = None
-        if state.getState() == Const.STATE_TURN_O:
-            mark = Const.MARK_O
-        if state.getState() == Const.STATE_TURN_X:
-            mark = Const.MARK_X
-        if mark == None:
-            raise ValueError("state must be playable")
-        board = state.getBoard()
-        playable = state.getPlayable()
-        # if len(playable) > 6:
-        #     #pick random spot
-        #     spot=playable[random.randint(0,len(playable)-1)]
-        # else:
-            #lookAhead play best scoring
-        playScoreList =[]
-        blockWin = None
-        for play in playable:
-            spot=play
-            #if win (for x) detected use the move that does not produce a win!:
-            # blockWin = self.checkImmediateLoss(state,spot)
-            # if blockWin:
-            #     break
-            playScoreList.append(self.lookAhead(state,spot))
-        # if blockWin:
-        #     spot = blockWin
-        # else:
-        spot = playable[playScoreList.index(max(playScoreList))]
-
-
+    def move(self,game):
         print("make a move: ", end='', flush=True)
+        (maxValue,maxOptions)=self.value(game)
+        playable = []
+        maxPlayableOption = 0
+        for move in game.getMoves():
+            move.play(game)
+            (moveValue,moveOptions)=self.value(game)
+            move.unplay(game)
+            if moveValue == maxValue:
+                playable.append((move,moveOptions))
+                maxPlayableOption = max(maxPlayableOption,moveOptions)
+
+        bestPlayable = []
+        for (move,options) in playable:
+            if options == maxPlayableOption:
+                bestPlayable.append(move)
+
+        spot=random.randint(0,len(bestPlayable)-1)
+
+
+        
         time.sleep(1)
-        print(self.abc[spot[0]], end='', flush=True)
+        print(self.abc[bestPlayable[spot].getRow()], end='', flush=True)
         time.sleep(1/random.randint(1,5))
-        print(spot[1]+1, end='', flush=True)
+        print(bestPlayable[spot].getCol()+1, end='', flush=True)
         time.sleep(1)
-        return Move(spot[0],spot[1],mark)
+        return bestPlayable[spot]
 
-    def lookAhead(self,_state,spot):
-        mark=None
-        state=copy.deepcopy(_state)
 
-        if state.getState()==Const.STATE_WIN_X:
-            return 1
-        elif state.getState()==Const.STATE_WIN_O:
-            return -1
-        elif state.getState()==Const.STATE_DRAW:
-            return 0
-        else:
-            if state.getState() == Const.STATE_TURN_O:
-                mark = Const.MARK_O
-            if state.getState() == Const.STATE_TURN_X:
-                mark = Const.MARK_X
-            if state.getState() == None:
-                raise ValueError("state must be playable")
-
-            state.move(spot[0],spot[1],mark)
-            value = []
-            for play in state.getPlayable():
-                look = self.lookAhead(state, play)
-                if look == None:
-                    #print("look = none")
-                    look=0
-                value.append(look)
-            if state.getState() == Const.STATE_TURN_O:
-                return min(value)
-            if state.getState() == Const.STATE_TURN_X:
-                return max(value)
 
     def setName(self):
         self._name = Const.AI_NAMES[random.randint(0, len(Const.AI_NAMES)-1)]
@@ -98,17 +100,4 @@ class MiniMaxAgent(Agent):
         print()
 
 
-    def checkImmediateLoss(self, _state, spot):
-        state = copy.deepcopy(_state)
-        mark = state.getState()
-        state.move(spot[0],spot[1], mark)
-        #return the move that gives a win
-        if state.getState() == Const.STATE_WIN_X:
-            return spot
-        for play in state.getPlayable():
-            state.move(play[0],play[1], state.getState())
-            #return the move that gives O a win (so you block it)
-            if state.getState() == Const.STATE_WIN_O:
-                return play
-            state.unmove(play[0],play[1])
 

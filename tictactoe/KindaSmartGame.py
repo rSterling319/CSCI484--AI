@@ -13,7 +13,7 @@ class KindaSmartGame:
     def __init__(self):
         self._state = State()
         self._agentX = SmartAgent(Const.MARK_X)
-        self._agentO = SmartAgent(Const.MARK_O)
+        self._agentO = HumanAgent(Const.MARK_O)
         self._agentX.setName()
         self._agentO.setName()
 

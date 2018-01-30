@@ -1,7 +1,7 @@
 from Const import Const
 from Move import Move
 
-class State:
+class Game:
     def moveOk(self,row,col,mark):
         Const.rowOk(row)
         Const.colOk(col)
@@ -84,13 +84,23 @@ class State:
     def getState(self):
         return self._state
 
-    def getPlayable(self):
-        playable=[]
+    def getMoves(self):
+        mark = None
+        if self._state == Const.STATE_TURN_O:
+            mark = Const.MARK_O
+        elif self._state == Const.STATE_TURN_X:
+            mark = Const.MARK_X
+
+        if mark == None:
+            return []
+
+        moves = []
         for row in range(Const.ROWS):
             for col in range(Const.COLS):
                 if self._board[row][col] == Const.MARK_NONE:
-                    playable.append([row,col])
-        return playable
+                    moves.append(Move(row,col,mark))
+
+        return moves
 
     def __init__(self):
         self.reset()

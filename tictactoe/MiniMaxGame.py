@@ -1,20 +1,21 @@
 from Const import Const
 from Move import Move
-from State import State
-from RandomAgent import RandomAgent
+from Game import Game
 from Agent import Agent
 from HumanAgent import HumanAgent
 from SmartAgent import SmartAgent
 from MiniMaxAgent import MiniMaxAgent
 import os
 import time
+import random
 
 class MiniMaxGame:
     abc ="abc"
     def __init__(self):
-        self._state = State()
-        self._agentX = MiniMaxAgent()
-        self._agentO = HumanAgent()
+        self._state = Game()
+        self._agentX = None
+        self._agentO = None
+        self.chooseFirstPlay()
         self._agentX.setName()
         self._agentO.setName()
 
@@ -59,6 +60,16 @@ class MiniMaxGame:
             if row <Const.ROWS-1:
                 print("   ---------")
         print()
+
+    def chooseFirstPlay(self):
+        rand = random.randint(1,2)
+        print(rand)
+        if rand % 2 == 0:
+            self._agentX = MiniMaxAgent(Const.MARK_X)
+            self._agentO = HumanAgent(Const.MARK_O)
+        else:
+            self._agentO = MiniMaxAgent(Const.MARK_O)
+            self._agentX = HumanAgent(Const.MARK_X)
 
 
 

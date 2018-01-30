@@ -1,7 +1,7 @@
 import random
 from Const import Const
 from Move import Move
-from State import State
+from Game import Game
 from Agent import Agent
 
 class HumanAgent(Agent):

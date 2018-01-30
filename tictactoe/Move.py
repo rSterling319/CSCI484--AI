@@ -36,5 +36,5 @@ class Move:
                 mark = Const.MARK_O
         state.move(self._row,self._col,mark)
 
-    def undo(self, state):
-        state.unmove(self._row,self._col)
+    def unplay(self, game):
+        game.unmove(self._row,self._col)
