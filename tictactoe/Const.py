@@ -11,6 +11,7 @@ class Const:
     STATE_DRAW = 5
     PRINT_X_O ={MARK_NONE:' ', MARK_O: 'O', MARK_X:'X'}
     AI_NAMES = ['HAL 9000', 'Deep Thought', 'GERTY 3000', 'LCARS', 'Skippy']
+    AI_INTELLEGENCE = 3 #Depth parameter for ai recursion depth
 
     def rowOk(row):
         if not isinstance(row,int):

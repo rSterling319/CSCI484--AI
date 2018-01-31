@@ -4,6 +4,7 @@ from Game import Game
 from Agent import Agent
 from HumanAgent import HumanAgent
 from MiniMaxAgent import MiniMaxAgent
+from MiniMaxDepthAgent import MiniMaxDepthAgent
 from SmartAgent import SmartAgent
 import os
 import time
@@ -69,7 +70,7 @@ class MiniMaxGame:
         print()
 
     def chooseFirstPlay(self):
-        rand = random.randint(1,2)
+        # rand = random.randint(1,2)
         # if rand % 2 == 0:
         #     self._agentX = MiniMaxAgent(Const.MARK_X)
         #     self._agentO = HumanAgent(Const.MARK_O)
@@ -78,7 +79,7 @@ class MiniMaxGame:
         #     self._agentX = HumanAgent(Const.MARK_X)
 
         self._agentX = MiniMaxAgent(Const.MARK_X)
-        self._agentO = MiniMaxAgent(Const.MARK_O)
+        self._agentO = MiniMaxDepthAgent(Const.MARK_O)
 
 
 
