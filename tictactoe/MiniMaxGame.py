@@ -3,8 +3,8 @@ from Move import Move
 from Game import Game
 from Agent import Agent
 from HumanAgent import HumanAgent
-from SmartAgent import SmartAgent
 from MiniMaxAgent import MiniMaxAgent
+from SmartAgent import SmartAgent
 import os
 import time
 import random
@@ -44,6 +44,13 @@ class MiniMaxGame:
         if self._state.getState() == Const.STATE_DRAW:
             print("draw")
 
+        #print the cache size
+        #if self._agentO.__class__.__name__ == "MiniMaxAgent":
+        print(len(self._agentO._cache))
+        #else:
+        print(len(self._agentX._cache))
+
+
 
     def printBoard(self):
         os.system("clear")
@@ -63,13 +70,15 @@ class MiniMaxGame:
 
     def chooseFirstPlay(self):
         rand = random.randint(1,2)
-        print(rand)
-        if rand % 2 == 0:
-            self._agentX = MiniMaxAgent(Const.MARK_X)
-            self._agentO = HumanAgent(Const.MARK_O)
-        else:
-            self._agentO = MiniMaxAgent(Const.MARK_O)
-            self._agentX = HumanAgent(Const.MARK_X)
+        # if rand % 2 == 0:
+        #     self._agentX = MiniMaxAgent(Const.MARK_X)
+        #     self._agentO = HumanAgent(Const.MARK_O)
+        # else:
+        #     self._agentO = MiniMaxAgent(Const.MARK_O)
+        #     self._agentX = HumanAgent(Const.MARK_X)
+
+        self._agentX = MiniMaxAgent(Const.MARK_X)
+        self._agentO = MiniMaxAgent(Const.MARK_O)
 
 
 
