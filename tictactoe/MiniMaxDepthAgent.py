@@ -22,6 +22,7 @@ class MiniMaxDepthAgent(Agent):
 
     def value(self,game, depth):
         if depth == Const.AI_INTELLEGENCE:
+            #If depth is reached return a Tie
             return (0, 0)
 
         ans = None
