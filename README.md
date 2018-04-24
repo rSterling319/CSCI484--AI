@@ -10,3 +10,6 @@ Git repository for homeworks of CSCI484--AI
 [Depth Agent](https://github.com/rSterling319/CSCI484--AI/blob/homework2/tictactoe/MiniMaxDepthAgent.py)  
 Notes on Depth Agent:  
 > Using Min-Max Algorithm I added a AI_INTELLEGENCE constant in Const.py. Then added a new parameter 'depth' in value method of MiniMaxDepthAgent class, if the depth was reached, then a tie is returned.
+
+## Homework 3 -- Gradient Decent on Easom Function
+[Link to Hw3](https://github.com/rSterling319/CSCI484--AI/tree/homework3/easomFunction)
