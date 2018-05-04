@@ -1,0 +1,6 @@
+data
+wav
+*.wav
+synthesized.py
+gen_audio.py
+tone_mapping.json
