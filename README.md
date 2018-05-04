@@ -14,5 +14,5 @@ Notes on Depth Agent:
 ## Homework 3 -- Gradient Decent on Easom Function
 [Link to Hw3](https://github.com/rSterling319/CSCI484--AI/tree/homework3/easomFunction)
 
-##Final Project -- Speech Recognizer
+## Final Project -- Speech Recognizer
 [Link to Final Project](https://github.com/rSterling319/CSCI484--AI/tree/final-project)
