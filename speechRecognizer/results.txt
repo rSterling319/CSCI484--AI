@@ -90,3 +90,49 @@ hours: 0
 min:8
 sec:3
 ++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: bed
+Filepath: data/bed/e82914c0_nohash_0.wav
+Training Set Size: 100
+--------------------------------------------------
+Top Five results:
+0) -4448.86498 eight
+1) -4481.15457 go
+2) -4520.85459 one
+3) -4527.21273 bed
+4) -4527.79526 five
+(3, (-4527.212729771303, 'bed')) -4448.86498
+
+Score off by: -78.347745
+Words off by: 3
+Incorrect
+
+Original: bed/e82914c0_nohash_0
+Predicted: eight
+hours: 0
+min:0
+sec:43
+++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: eight
+Filepath: data/eight/db43cd03_nohash_0.wav
+Training Set Size: 100
+--------------------------------------------------
+Top Five results:
+0) -4653.21702 eight
+1) -4727.73044 yes
+2) -4744.15188 stop
+3) -4757.15185 six
+4) -4758.71083 house
+(0, (-4653.217024351522, 'eight')) -4653.21702
+
+Score off by: 0.000000
+Words off by: 0
+Incorrect
+
+Original: eight/db43cd03_nohash_0
+Predicted: eight
+hours: 0
+min:0
+sec:41
+++++++++++++++++++++++++++++++++++++++++++++++++++

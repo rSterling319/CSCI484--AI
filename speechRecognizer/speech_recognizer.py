@@ -66,7 +66,7 @@ def build_models(input_folder):
 
         #extract the label
         label = subfolder[subfolder.rfind('/')+1:]
-        
+
         #init the variables
         X = np.array([])
 
@@ -74,10 +74,10 @@ def build_models(input_folder):
         training_files = [x for x in os.listdir(subfolder) if x.endswith('.wav')]
 
         #Comment to use all
-        # try:
-        #     training_files = random.sample(training_files, 1000)#chose n files from each to speed things up
-        # except ValueError: #if the sample size is bigger than array continue
-        #     continue
+        try:
+            training_files = random.sample(training_files, 100)#chose n files from each to speed things up
+        except ValueError: #if the sample size is bigger than array continue
+            continue
 
         #iterate throught the training files and build the models
         for filename in training_files:
@@ -188,7 +188,7 @@ if __name__ == '__main__':
     filepath = random.choice(os.listdir('data/'+word))
     filepath = 'data/'+word+'/'+filepath
     printline('=')
-    out.write("Test Word: %s\nFilepath: %s\nTraining Set Size: %s\n" %(word,filepath, "2000+"))
+    out.write("Test Word: %s\nFilepath: %s\nTraining Set Size: %s\n" %(word,filepath, "100"))
     printline('-')
 
     test_files.append(filepath)
