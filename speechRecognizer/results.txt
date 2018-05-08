@@ -136,3 +136,49 @@ hours: 0
 min:0
 sec:41
 ++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: yes
+Filepath: data/yes/51055bda_nohash_0.wav
+Training Set Size: 100
+--------------------------------------------------
+Top Five results:
+0) -5251.89670 yes
+1) -5262.14319 eight
+2) -5271.49960 left
+3) -5274.87350 five
+4) -5281.63082 bed
+(0, (-5251.896704202444, 'yes')) -5251.89670
+
+Score off by: 0.000000
+Words off by: 0
+Incorrect
+
+Original: yes/51055bda_nohash_0
+Predicted: yes
+hours: 0
+min:0
+sec:44
+++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: wow
+Filepath: data/wow/43691f67_nohash_0.wav
+Training Set Size: 100
+--------------------------------------------------
+Top Five results:
+0) -4631.47790 five
+1) -4643.60811 wow
+2) -4660.69255 go
+3) -4668.87066 stop
+4) -4699.62233 up
+(1, (-4643.608112336995, 'wow')) -4631.47790
+
+Score off by: -12.130210
+Words off by: 1
+Incorrect
+
+Original: wow/43691f67_nohash_0
+Predicted: five
+hours: 0
+min:0
+sec:48
+++++++++++++++++++++++++++++++++++++++++++++++++++
