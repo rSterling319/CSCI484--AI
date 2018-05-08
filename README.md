@@ -16,5 +16,7 @@ Notes on Depth Agent:
 
 ## Final Project -- Speech Recognizer
 [Link to Final Project](https://github.com/rSterling319/CSCI484--AI/tree/final-project)
-...* [Final Presentation](https://youtu.be/HyR1xYF1sDQ)
-...* [Final Presentatnion Take 2](https://youtu.be/FBKq5kl0FTU) -- The first recording only captured one image of my screen, so I made a second short one to show off what I was talking about rather than bore my classmates and present for a second time.
+
+..* [Final Presentation](https://youtu.be/HyR1xYF1sDQ)
+..* [Final Presentatnion Take 2](https://youtu.be/FBKq5kl0FTU)
+...The first recording only captured one image of my screen, so I made a second short one to show off what I was talking about rather than bore my classmates and present for a second time.
