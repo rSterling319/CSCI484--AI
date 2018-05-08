@@ -1,0 +1,92 @@
+==================================================
+Test Word: eight
+Filepath: data/eight/dcc012ec_nohash_0.wav
+Training Set Size: 10
+--------------------------------------------------
+Top Five results:
+0) -4497.98381 left
+1) -4531.75384 no
+2) -4535.94881 right
+3) -4560.04842 four
+4) -4563.64597 happy
+(5, (-4589.669670714905, 'eight')) -4497.98381
+
+Score off by: -91.685865
+Words off by: 5
+Incorrect
+
+Original: eight/dcc012ec_nohash_0
+Predicted: left
+hours: 0
+min:0
+sec:3
+++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: one
+Filepath: data/one/73af0c50_nohash_0.wav
+Training Set Size: 100
+--------------------------------------------------
+Top Five results:
+0) -4900.86357 stop
+1) -4917.61736 go
+2) -4938.25967 wow
+3) -4948.63672 dog
+4) -4958.85488 house
+(7, (-4984.347641011254, 'one')) -4900.86357
+
+Score off by: -83.484067
+Words off by: 7
+Incorrect
+
+Original: one/73af0c50_nohash_0
+Predicted: stop
+hours: 0
+min:0
+sec:40
+++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: house
+Filepath: data/house/5fc3ed24_nohash_0.wav
+Training Set Size: 500
+--------------------------------------------------
+Top Five results:
+0) -4651.42866 stop
+1) -4658.38418 house
+2) -4783.30809 wow
+3) -4792.79689 off
+4) -4794.46233 cat
+(1, (-4658.384175473963, 'house')) -4651.42866
+
+Score off by: -6.955515
+Words off by: 1
+Incorrect
+
+Original: house/5fc3ed24_nohash_0
+Predicted: stop
+hours: 0
+min:3
+sec:50
+++++++++++++++++++++++++++++++++++++++++++++++++++
+==================================================
+Test Word: left
+Filepath: data/left/59c3a7f2_nohash_0.wav
+Training Set Size: 1000
+--------------------------------------------------
+Top Five results:
+0) -4814.53922 seven
+1) -4845.63940 left
+2) -4850.08729 bed
+3) -4850.42469 no
+4) -4864.96488 five
+(1, (-4845.639402009811, 'left')) -4814.53922
+
+Score off by: -31.100178
+Words off by: 1
+Incorrect
+
+Original: left/59c3a7f2_nohash_0
+Predicted: seven
+hours: 0
+min:8
+sec:3
+++++++++++++++++++++++++++++++++++++++++++++++++++

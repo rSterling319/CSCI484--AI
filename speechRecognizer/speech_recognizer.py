@@ -13,6 +13,8 @@ import random
 
 import time
 
+import pickle
+
 
 import numpy as np
 from scipy.io import wavfile
@@ -20,6 +22,9 @@ from scipy.io import wavfile
 from hmmlearn import hmm
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 from python_speech_features import mfcc
+
+outFile = "results.txt"
+out = open(outFile, 'a')
 
 #define function to parse input args
 def build_arg_parser():
@@ -61,17 +66,18 @@ def build_models(input_folder):
 
         #extract the label
         label = subfolder[subfolder.rfind('/')+1:]
-
+        
         #init the variables
         X = np.array([])
 
         #create a list of files to be used for training
-        #leave one file per folder for testing
         training_files = [x for x in os.listdir(subfolder) if x.endswith('.wav')]
-        try:
-            training_files = random.sample(training_files, 50)#chose n files from each to speed things up
-        except ValueError:
-            continue
+
+        #Comment to use all
+        # try:
+        #     training_files = random.sample(training_files, 1000)#chose n files from each to speed things up
+        # except ValueError: #if the sample size is bigger than array continue
+        #     continue
 
         #iterate throught the training files and build the models
         for filename in training_files:
@@ -97,6 +103,7 @@ def build_models(input_folder):
 
         #reset the variable
         model = None
+
     return speech_models
 
 #Define a function to run tests on input files
@@ -105,7 +112,7 @@ def run_tests(test_files):
     for test_file in test_files:
         #read input files:
         sampling_freq, signal = wavfile.read(test_file)
-        #extract mfcc features
+        #extract mfcc features (Mel Frequency Cepstral Coefficients)
         with warnings.catch_warnings():
             warnings.simplefilter('ignore')
             features_mfcc = mfcc(signal, sampling_freq)
@@ -114,7 +121,8 @@ def run_tests(test_files):
         output_label = None
         #run the current feature vector through all the hmm models and pick the one with highest score
         allScores =[]
-        print(speech_models[0])
+        # print(speech_models[0])
+
         for item in speech_models:
             model, label = item
             score = model.compute_score(features_mfcc)
@@ -126,8 +134,9 @@ def run_tests(test_files):
         #sort all the scores
         allScores = sorted(allScores, key=lambda x: (-x[0], x[1]))
         #print top five results
-        for pair in allScores[:5]:
-            print(pair[0],pair[1])
+        out.write("Top Five results:\n")
+        for i, pair in enumerate(allScores[:5]):
+            out.write("%d) %.5f %s\n"%(i, pair[0], pair[1]))
 
         #print the predicted output
         start_index = test_file.find('/')+1
@@ -138,38 +147,55 @@ def run_tests(test_files):
 
             if x[1] == original_label[:original_label.rfind('/')]:
                 actual =(i,x)
-        print(actual, allScores[0][0])
-        print("Score off by: %f" %(actual[1][0]- allScores[0][0]))
-        print("Words off by: %d" % actual[0])
-        print('\nOriginal: ', original_label)
-        print('Predicted: ', predicted_label)
+        # try:
+        out.write("%s %.5f\n" %(str(actual), allScores[0][0]))
+        # except IndexError:
+            # out.write("%s  %s" %("Something went wrong with allScores", str(allScores)))
+        # try:
+        out.write("\nScore off by: %f\n" %(actual[1][0]- allScores[0][0]))
+        out.write("Words off by: %d\n" % actual[0])
+        # except TypeError:
+            # out.write("\nScore off by: %s\n" %("TypeError: something went wrong"))
+            # out.write("Words off by: %s %s\n" %("TypeError: Something went wrong:", str(actual)))
+        if actual == 0:
+            out.write("Correct\n")
+        else:
+            out.write("Incorrect\n")
+        out.write('\nOriginal: %s\n' % original_label)
+        out.write('Predicted: %s\n'  %predicted_label)
+
+def printline(ch):
+    out.write("%s\n" %(ch*50))
+
 if __name__ == '__main__':
     args = build_arg_parser().parse_args()
     input_folder=args.input_folder
 
+
+
     start = time.time()
     #build on hmm model for each word
     speech_models = build_models(input_folder)
-    #test files -- the 15th file in each subfolder
+    #pickle.dump(speech_models, open("pickled.sav", "wb"))
+
+    #test files
     test_files = []
-    # for root, dirs, files in os.walk(input_folder):
-    #     for filename in (x for x in files if '15' in x):
-    #         filepath = os.path.join(root, filename)
-    #         print(filepath)
-    #         test_files.append(filepath)
 
     word = None
-    while word is '_background_noise_' or word is '.DS_Store' or word is None:
+    while word is '_background_noise_' or word is '.DS_Store' or word is 'fruits' or word is None:
         word = random.choice(os.listdir('data'))
         print(word)
     filepath = random.choice(os.listdir('data/'+word))
     filepath = 'data/'+word+'/'+filepath
-    print("Test Word: %s\nFilepath: %s\n" %(word,filepath))
+    printline('=')
+    out.write("Test Word: %s\nFilepath: %s\nTraining Set Size: %s\n" %(word,filepath, "2000+"))
+    printline('-')
 
     test_files.append(filepath)
 
     run_tests(test_files)
     end = time.time()
     elapsed = end-start
-    print("hours: %d\nmin:%d\nsec:%d" %(elapsed/3600, elapsed/60, elapsed%60))
-    print(word)
+    out.write("hours: %d\nmin:%d\nsec:%d\n" %(elapsed/3600, elapsed/60, elapsed%60))
+    # print(word)
+    printline('+')
